@@ -1,0 +1,30 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Carrera extends Model
+{
+    use HasFactory;
+
+    protected $fillable = [
+        'nombre',
+        'identificador',
+        'dpto',
+        'docente',
+        'duracion',
+    ];
+
+    public function materias()
+    {
+        return $this->belongsToMany('App\Models\Materia');
+    }
+
+    public function scopeSearch($query, $search)
+    {
+        return $query->where('nombre','ilike', '%'.$search.'%')
+            ->orWhere('identificador','ilike', '%'.$search.'%');
+    }
+}
