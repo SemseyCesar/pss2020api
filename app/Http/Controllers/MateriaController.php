@@ -11,7 +11,7 @@ class MateriaController extends Controller
     public function store(Request $request){
         $validatedRequest = $request->validate([
             'nombre' => ['required', 'string', 'max:255',],
-            'identificador' => ['required', 'string', 'max:255', 'unique:carreras'],
+            'identificador' => ['required', 'string', 'max:255', 'unique:materias'],
             'dpto' => ['required', 'string', 'max:255',],
             // 'carreras.*' => ['exists:App\Models\Carrera,id'],    
         ]);

@@ -13,11 +13,22 @@ class CarreraController extends Controller
             'identificador' => ['required', 'string', 'max:255', 'unique:carreras'],
             'dpto' => ['required', 'string', 'max:255',],
             'docente' => ['required', 'string', 'max:255',],
-            'duracion' => ['required', 'integer'],
-            // 'materias.*' => ['exists:App\Models\Materia,id'],    
+            'duracion' => ['required', 'string'],
+            'materias.*.id' => ['required'],
+            'materias.*.anio' => ['required'],
+            'materias.*.cuatrimestre' => ['required'],
         ]);
         $carrera = Carrera::create($validatedRequest);
-        return response(['carrera' => $carrera ],200);
+        $sync_data=[];
+        for($i = 0; $i < count($request->materias); $i++){
+            $sync_data[$request->materias[$i]['id']] = [
+                'anio' => $request->materias[$i]['anio'],
+                'cuatrimestre' => $request->materias[$i]['cuatrimestre'],
+            ];
+        }
+        $carrera->materias()->sync($sync_data);
+
+        return response(['carrera' => Carrera::with('materias')->find($carrera->id)],200);
     }
 
     public function detail(Request $request, $id){
@@ -29,7 +40,7 @@ class CarreraController extends Controller
     }
 
     public function search(Request $request){
-        $carreras = Carrera::orderBy('nombre','ASC');
+        $carreras = Carrera::with('materias')->orderBy('nombre','ASC');
         $search = $request->search;
         if($search != null)
             $carreras->search($search);

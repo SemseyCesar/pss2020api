@@ -19,7 +19,7 @@ class Carrera extends Model
 
     public function materias()
     {
-        return $this->belongsToMany('App\Models\Materia');
+        return $this->belongsToMany('App\Models\Materia','materia_carrera');
     }
 
     public function scopeSearch($query, $search)
