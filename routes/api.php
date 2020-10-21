@@ -24,8 +24,10 @@ Route::post('/login','AuthController@login');
 Route::post('/carrera','CarreraController@store');
 Route::post('/materia','MateriaController@store');
 
-Route::get('/carrera/search','CarreraController@search');
-Route::get('/materia/search','MateriaController@search');
+Route::post('/carrera/search','CarreraController@search');
+Route::post('/materia/search','MateriaController@search');
+Route::post('/user/search','UserController@search');
+
 
 Route::get('/carrera/{id}','CarreraController@detail');
 Route::get('/materia/{id}','MateriaController@detail');
