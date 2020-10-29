@@ -8,7 +8,7 @@ use App\Models\Carrera;
 class CarreraController extends Controller
 {
     public function store(Request $request){
-        $validatedRequest = $this->carrera_validate($request);
+        $validatedRequest = $this->carrera_validate($request, null);
         $carrera = Carrera::create($validatedRequest);
         $sync_data=[];
         for($i = 0; $i < count($request->materias); $i++){
@@ -24,11 +24,12 @@ class CarreraController extends Controller
 
     public function update(Request $request, $id){
         $carrera = Carrera::find($id);
-        $validatedRequest = $this->carrera_validate($request);
+        $validatedRequest = $this->carrera_validate($request, $carrera);
         $carrera->nombre = $request->nombre;
         $carrera->identificador = $request->identificador ;       
         $carrera->dpto = $request->dpto;
         $carrera->docente = $request->docente;
+        $sync_data=[];
         for($i = 0; $i < count($request->materias); $i++){
             $sync_data[$request->materias[$i]['id']] = [
                 'anio' => $request->materias[$i]['anio'],
@@ -50,7 +51,7 @@ class CarreraController extends Controller
     }
 
     public function detail(Request $request, $id){
-        $carrera = Carrera::find($id);
+        $carrera = Carrera::with('materias')->find($id);
         if($carrera != null)
             return response(['carrera' => $carrera ],200);
         else 
@@ -65,10 +66,15 @@ class CarreraController extends Controller
         return response(['carreras' => $carreras->get() ],200);
     }
 
-    public function carrera_validate($request){
+    public function carrera_validate($request, $carrera){
+
+        $identificador_validate = 'unique:carreras';
+        if($carrera!= null){
+            $identificador_validate = 'unique:carreras,identificador,'.$carrera->id;
+        }
         return $request->validate([
             'nombre' => ['required', 'string', 'max:255',],
-            'identificador' => ['required', 'string', 'max:255', 'unique:carreras'],
+            'identificador' => ['required', 'string', 'max:255', $identificador_validate],
             'dpto' => ['required', 'string', 'max:255',],
             'docente' => ['required', 'string', 'max:255',],
             'duracion' => ['required', 'string'],
