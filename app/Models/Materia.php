@@ -17,7 +17,8 @@ class Materia extends Model
 
     public function carreras()
     {
-        return $this->belongsToMany('App\Models\Carrera','materia_carrera');
+        return $this->belongsToMany('App\Models\Carrera', 'materia_carrera')
+            ->withPivot('anio', 'cuatrimestre');
     }
 
     public function scopeSearch($query, $search)
