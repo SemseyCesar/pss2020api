@@ -31,3 +31,9 @@ Route::post('/user/search','UserController@search');
 
 Route::get('/carrera/{id}','CarreraController@detail');
 Route::get('/materia/{id}','MateriaController@detail');
+
+Route::put('/carrera/{id}','CarreraController@update');
+Route::put('/materia/{id}','MateriaController@update');
+
+Route::delete('/carrera/{id}','CarreraController@delete');
+Route::delete('/materia/{id}','MateriaController@delete');
