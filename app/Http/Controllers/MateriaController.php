@@ -64,4 +64,16 @@ class MateriaController extends Controller
             'dpto' => ['required', 'string', 'max:255',], 
         ]);
     }
+
+    public function asociar($request){
+
+        $validated_request = $request->validate([
+            'materia_id' => ['required']
+        ]);
+        
+        $materia = Materia::find($id);
+        $materia->profesor_id = $validated_request->profesor_id;
+        $materia->asistente_id = $validated_request->asistente_id;
+        $materia->save();
+    }
 }

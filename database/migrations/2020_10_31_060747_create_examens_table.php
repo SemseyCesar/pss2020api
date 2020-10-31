@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateMateriasTable extends Migration
+class CreateExamensTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,21 +13,20 @@ class CreateMateriasTable extends Migration
      */
     public function up()
     {
-        Schema::create('materias', function (Blueprint $table) {
+        Schema::create('examens', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->string('nombre');
-            $table->string('identificador')->unique();
-            $table->string('dpto');
+
+            $table->integer('materia_id')->unsigned()->nullable();
+            $table->foreign('materia_id')->references('id')->on('materias')->onDelete('cascade');
 
             $table->integer('profesor_id')->unsigned()->nullable();
             $table->foreign('profesor_id')->references('id')->on('users')->onDelete('cascade');
 
-            $table->integer('asistente_id')->unsigned()->nullable();
-            $table->foreign('asistente_id')->references('id')->on('users')->onDelete('cascade');
+            $table->string('identificador')->unique();
+            $table->dateTime('fecha');
+            $table->string('aula');
 
-            /*
-            faltan fks */
         });
     }
 
@@ -38,6 +37,6 @@ class CreateMateriasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('materias');
+        Schema::dropIfExists('examens');
     }
 }

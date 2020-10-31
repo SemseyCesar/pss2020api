@@ -57,4 +57,13 @@ class User extends Authenticatable
             ->orWhere('legajo','ilike', '%'.$search.'%')
             ->orWhere('DNI','ilike', '%'.$search.'%');
     }
+    
+    public function materias_profesor(){
+        return $this->hasMany('App\Models\Materia', 'profesor_id', 'id');
+    }
+
+    public function materias_asistente(){
+        return $this->hasMany('App\Models\Materia', 'asistente_id', 'id');
+    }
+
 }
