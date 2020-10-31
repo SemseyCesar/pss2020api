@@ -18,22 +18,22 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('/register','AuthController@register');
+#AUTH Y USER
+Route::post('/register','AuthController@register')->middleware('auth:api');
 Route::post('/login','AuthController@login');
-
-Route::post('/carrera','CarreraController@store');
-Route::post('/materia','MateriaController@store');
-
-Route::post('/carrera/search','CarreraController@search');
-Route::post('/materia/search','MateriaController@search');
 Route::post('/user/search','UserController@search');
 
+#CARRERAS
+Route::post('/carrera','CarreraController@store')->middleware('auth:api');
+Route::post('/carrera/search','CarreraController@search');
+Route::get('/carrera/{id}','CarreraController@detail')->middleware('auth:api');
+Route::put('/carrera/{id}','CarreraController@update')->middleware('auth:api');
+Route::delete('/carrera/{id}','CarreraController@delete')->middleware('auth:api');
 
-Route::get('/carrera/{id}','CarreraController@detail');
-Route::get('/materia/{id}','MateriaController@detail');
-
-Route::put('/carrera/{id}','CarreraController@update');
-Route::put('/materia/{id}','MateriaController@update');
-
-Route::delete('/carrera/{id}','CarreraController@delete');
-Route::delete('/materia/{id}','MateriaController@delete');
+#MATERIAS
+Route::post('/materia','MateriaController@store')->middleware('auth:api');
+Route::post('/materia/search','MateriaController@search');
+Route::get('/materia/{id}','MateriaController@detail')->middleware('auth:api');
+Route::put('/materia/{id}','MateriaController@update')->middleware('auth:api');
+Route::delete('/materia/{id}','MateriaController@delete')->middleware('auth:api');
+Route::post('/materia/asociar','MateriaController@asociar')->middleware('auth:api');

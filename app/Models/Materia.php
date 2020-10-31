@@ -26,4 +26,14 @@ class Materia extends Model
         return $query->where('nombre','ilike', '%'.$search.'%')
             ->orWhere('identificador','ilike', '%'.$search.'%');
     }
+
+    public function asistente()
+    {
+        return $this->belongsTo('App\Models\User', 'asistente_id');
+    }
+
+    public function profesor()
+    {
+        return $this->belongsTo('App\Models\User', 'profesor_id');
+    }
 }
