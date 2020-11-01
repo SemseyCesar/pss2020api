@@ -23,4 +23,9 @@ class UserController extends Controller
             $users->search($search);
         return response(['users' => $users->get() ],200);
     }
+
+    public function docentes(Request $request){
+        $docentes = User::orderBy('nombre_apellido','ASC')->docentes();
+        return response(['docentes' => $docentes->get() ],200);
+    }
 }

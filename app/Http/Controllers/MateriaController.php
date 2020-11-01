@@ -65,15 +65,27 @@ class MateriaController extends Controller
         ]);
     }
 
-    public function asociar($request){
-
+    public function asociar(Request $request){
         $validated_request = $request->validate([
             'materia_id' => ['required']
         ]);
         
-        $materia = Materia::find($id);
-        $materia->profesor_id = $validated_request->profesor_id;
-        $materia->asistente_id = $validated_request->asistente_id;
+        $materia = Materia::find($request->materia_id);
+        $materia->profesor_id = $request->profesor_id;
+        $materia->asistente_id = $request->asistente_id;
         $materia->save();
+
+        return response(
+            [
+                'materia' => Materia::with('profesor')
+                ->with('asistente')
+                ->find($request->materia_id) 
+            ], 200);
+    }
+
+    public function index(Request $request){
+        $materias = Materia::orderBy('nombre','ASC')
+            ->with('profesor')->with('asistente');
+        return response(['materias' => $materias->get() ],200);
     }
 }

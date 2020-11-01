@@ -18,7 +18,7 @@ class CreateAlumnoExamen extends Migration
             $table->timestamps();
 
             $table->integer('examen_id')->unsigned()->nullable();
-            $table->foreign('examen_id')->references('id')->on('examen')->onDelete('cascade');
+            $table->foreign('examen_id')->references('id')->on('examens')->onDelete('cascade');
 
             $table->integer('alumno_id')->unsigned()->nullable();
             $table->foreign('alumno_id')->references('id')->on('users')->onDelete('cascade');

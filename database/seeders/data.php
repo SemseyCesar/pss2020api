@@ -110,7 +110,7 @@ $data_materias =
 $data_users = [
     [
         "email" => "admin@mail.com",
-        "password" => "12345678",
+        "password" => bcrypt("admin123"),
         "type" => "admin",
         "nombre_apellido" => "pepe sanchez",
         "fecha_nacimiento" => "2000-10-19",
@@ -123,7 +123,7 @@ $data_users = [
     ],
     [
         "email" => "alumno1@mail.com",
-        "password" => "12345678",
+        "password" => bcrypt("12345678"),
         "type" => "alumno",
         "nombre_apellido" => "pepe sanchez 1",
         "fecha_nacimiento" => "2000-10-19",
@@ -137,7 +137,7 @@ $data_users = [
     ],
     [
         "email" => "docente1@mail.com",
-        "password" => "12345678",
+        "password" => bcrypt("12345678"),
         "type" => "docente",
         "nombre_apellido" => "pepe sanchez 2",
         "fecha_nacimiento" => "2000-10-19",

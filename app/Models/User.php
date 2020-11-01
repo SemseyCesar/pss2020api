@@ -66,4 +66,8 @@ class User extends Authenticatable
         return $this->hasMany('App\Models\Materia', 'asistente_id', 'id');
     }
 
+    public function scopeDocentes($query){
+        return $query->where('type','=','docente');
+    }
+
 }

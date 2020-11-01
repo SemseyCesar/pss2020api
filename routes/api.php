@@ -19,9 +19,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 #AUTH Y USER
-Route::post('/register','AuthController@register')->middleware('auth:api');
+Route::post('/register','AuthController@register');
 Route::post('/login','AuthController@login');
 Route::post('/user/search','UserController@search');
+Route::get('/user/docentes','UserController@docentes');
 
 #CARRERAS
 Route::post('/carrera','CarreraController@store')->middleware('auth:api');
@@ -34,6 +35,7 @@ Route::delete('/carrera/{id}','CarreraController@delete')->middleware('auth:api'
 Route::post('/materia','MateriaController@store')->middleware('auth:api');
 Route::post('/materia/search','MateriaController@search');
 Route::get('/materia/{id}','MateriaController@detail')->middleware('auth:api');
+Route::get('/materia','MateriaController@index');
 Route::put('/materia/{id}','MateriaController@update')->middleware('auth:api');
 Route::delete('/materia/{id}','MateriaController@delete')->middleware('auth:api');
-Route::post('/materia/asociar','MateriaController@asociar')->middleware('auth:api');
+Route::post('/materia/asociar','MateriaController@asociar');
