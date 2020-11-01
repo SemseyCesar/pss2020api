@@ -14,4 +14,14 @@ class Examen extends Model
         return $this->belongsToMany('App\Models\User', 'alumno_examen')
             ->withPivot('fecha_inscripcion');
     }
+
+    public function materia()
+    {
+        return $this->belongsTo('App\Models\Materia', 'materia_id');
+    }
+    
+    public function profesor()
+    {
+        return $this->belongsTo('App\Models\User', 'profesor_id');
+    }
 }

@@ -28,4 +28,11 @@ class UserController extends Controller
         $docentes = User::orderBy('nombre_apellido','ASC')->docentes();
         return response(['docentes' => $docentes->get() ],200);
     }
+
+    public function check(Request $request){
+        if(in_array(auth()->user()->type, $request->roles))
+            return response(['auth' => "ok"],200);
+        else    
+            return response(['message'=>'Acceso Denegado'],403);
+    }
 }

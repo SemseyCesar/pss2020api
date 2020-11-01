@@ -24,7 +24,8 @@ class CreateExamensTable extends Migration
             $table->foreign('profesor_id')->references('id')->on('users')->onDelete('cascade');
 
             $table->string('identificador')->unique();
-            $table->dateTime('fecha');
+            $table->date('fecha');
+            $table->time('hora');
             $table->string('aula');
 
         });
