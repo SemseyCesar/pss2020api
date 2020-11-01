@@ -40,3 +40,7 @@ Route::get('/materia','MateriaController@index')->middleware('auth:api');
 Route::put('/materia/{id}','MateriaController@update')->middleware('auth:api');
 Route::delete('/materia/{id}','MateriaController@delete')->middleware('auth:api');
 Route::post('/materia/asociar','MateriaController@asociar')->middleware('auth:api');
+
+#EXAMEN
+Route::post('/examen','ExamenController@store')->middleware('auth:api');
+Route::put('/examen/{id}','ExamenController@update')->middleware('auth:api');

@@ -9,6 +9,14 @@ class Examen extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'identificador',
+        'materia_id',
+        'fecha',
+        'hora',
+        'aula'
+    ];
+    
     public function anotados()
     {
         return $this->belongsToMany('App\Models\User', 'alumno_examen')

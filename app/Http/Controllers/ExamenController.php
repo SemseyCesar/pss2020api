@@ -36,8 +36,8 @@ class ExamenController extends Controller
         return $request->validate([
             'identificador' => ['required', 'string', 'max:255', $identificador_validate],
             'materia_id' => ['required'],
-            'fecha' => ['required', 'date'],
-            'hora' => ['required', 'time'],
+            'fecha' => ['required', 'date', 'date_format:"Y-m-d"'],
+            'hora' => ['required', 'date_format:"H:i"'],
             'aula' => ['required','string']
         ]);
     }
