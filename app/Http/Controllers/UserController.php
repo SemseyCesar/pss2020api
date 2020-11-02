@@ -35,4 +35,15 @@ class UserController extends Controller
         else    
             return response(['message'=>'Acceso Denegado'],403);
     }
+
+    public function materias()
+    {
+        return $this->belongsToMany('App\Materia');
+    }
+
+    public function carreras()
+    {
+        return $this->belongsToMany('App\Carrera');
+    }
+
 }

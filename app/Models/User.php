@@ -70,4 +70,13 @@ class User extends Authenticatable
         return $query->where('type','=','docente');
     }
 
+    public function carreras()
+    {
+        return $this->belongsToMany('App\Models\Carrera', 'alumno_carrera', 'alumno_id','carrera_id');
+    }
+
+    public function materias()
+    {
+        return $this->belongsToMany('App\Models\Materia', 'alumno_materia', 'alumno_id','materia_id');
+    }
 }

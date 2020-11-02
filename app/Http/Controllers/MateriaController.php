@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Materia;
+use App\Models\User;
 
 class MateriaController extends Controller
 {
@@ -84,8 +85,27 @@ class MateriaController extends Controller
     }
 
     public function index(Request $request){
-        $materias = Materia::orderBy('nombre','ASC')
-            ->with('profesor')->with('asistente');
-        return response(['materias' => $materias->get() ],200);
+        $materias = Materia::orderBy('nombre','ASC');
+        $materias->with('profesor')->with('asistente');
+        return response(['materias' => $materias->get()],200);
+    }
+
+
+    public function materiasalumno(Request $request){
+        if(auth()->user()->type == 'alumno'){
+            $carreras_id = User::find(auth()->user()->id)->carreras()->pluck('carrera_id');
+            $materias =  Materia::orderBy('nombre','ASC')->whereHas('carreras', function($query) use($carreras_id) {
+                $query->whereIn('carrera_id', $carreras_id);
+            });
+            return response(['materias' => $materias->get()],200);
+        }
+        return response(['auth' => "no es alumno"],403);
+    }
+
+    public function inscripcion(Request $request){
+        $materia = Materia::find($request->materia_id);
+        $materia->anotados()->attach(auth()->user()->id);
+        $materia->save();
+        return response(['materias' => 'anotado'],200);
     }
 }

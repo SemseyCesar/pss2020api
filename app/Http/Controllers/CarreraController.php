@@ -83,4 +83,21 @@ class CarreraController extends Controller
             'materias.*.cuatrimestre' => ['required'],
         ]);
     }
+
+    public function inscripcion(Request $request){
+        $carrera = Carrera::find($request->carrera_id);
+        $carrera->anotados()->attach(auth()->user()->id);
+        $carrera->save();
+        return response(['carreras' => 'anotado'],200);
+    }
+
+    public function carrerasalumno(Request $request){
+        $carreras = auth()->user()->carreras()->with('materias')->orderBy('nombre','ASC');
+        return response(['carreras' => $carreras->get() ],200);
+    }
+
+    public function index(Request $request){
+        $carreras = Carrera::with('materias');
+        return response(['carreras' => $carreras->get() ],200);
+    }
 }

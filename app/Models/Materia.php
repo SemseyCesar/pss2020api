@@ -36,4 +36,9 @@ class Materia extends Model
     {
         return $this->belongsTo('App\Models\User', 'profesor_id');
     }
+
+    public function anotados()
+    {
+        return $this->belongsToMany('App\Models\User', 'alumno_materia', 'materia_id', 'alumno_id');
+    }
 }

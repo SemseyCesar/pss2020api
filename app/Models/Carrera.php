@@ -28,4 +28,9 @@ class Carrera extends Model
         return $query->where('nombre','ilike', '%'.$search.'%')
             ->orWhere('identificador','ilike', '%'.$search.'%');
     }
+
+    public function anotados()
+    {
+        return $this->belongsToMany('App\Models\User', 'alumno_carrera', 'carrera_id', 'alumno_id');
+    }
 }
