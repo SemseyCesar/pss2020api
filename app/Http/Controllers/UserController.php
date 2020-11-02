@@ -31,7 +31,7 @@ class UserController extends Controller
 
     public function check(Request $request){
         if(in_array(auth()->user()->type, $request->roles))
-            return response(['auth' => "ok"],200);
+            return response(['auth' =>  auth()->user()->type],200);
         else    
             return response(['message'=>'Acceso Denegado'],403);
     }
