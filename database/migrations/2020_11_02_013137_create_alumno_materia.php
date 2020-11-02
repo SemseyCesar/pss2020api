@@ -22,7 +22,9 @@ class CreateAlumnoMateria extends Migration
 
             $table->integer('alumno_id')->unsigned()->nullable();
             $table->foreign('alumno_id')->references('id')->on('users')->onDelete('cascade');
-        
+            
+            $table->integer('nota_final')->nullable();
+            $table->integer('nota_cursado')->nullable();
         });
     }
 

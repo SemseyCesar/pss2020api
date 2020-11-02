@@ -50,3 +50,7 @@ Route::put('/examen/{id}','ExamenController@update')->middleware('auth:api');
 
 #ALUMNO
 Route::get('/alumno/carrera','CarreraController@carrerasalumno')->middleware('auth:api');
+
+#PROFESORES
+Route::post('/profesor/materia/nota','MateriaController@nota')->middleware('auth:api');
+Route::get('/profesor/carrera','CarreraController@carrerasprofesor')->middleware('auth:api');

@@ -108,4 +108,12 @@ class MateriaController extends Controller
         $materia->save();
         return response(['materias' => 'anotado'],200);
     }
+
+    public function nota(Request $request){
+        $alumno_materia = Materia::find($request->materia_id)->anotados()->find($request->alumno_id);
+        $alumno_materia->pivot->nota_final = $request->nota_final;
+        $alumno_materia->pivot->nota_cursado = $request->nota_cursado;
+        $alumno_materia->pivot->save();
+        return response(['materias' => materia::with('anotados')->find($request->materia_id)],200);
+    }
 }

@@ -77,6 +77,7 @@ class User extends Authenticatable
 
     public function materias()
     {
-        return $this->belongsToMany('App\Models\Materia', 'alumno_materia', 'alumno_id','materia_id');
+        return $this->belongsToMany('App\Models\Materia', 'alumno_materia', 'alumno_id','materia_id')
+            ->withPivot('nota_cursado', 'nota_final');;
     }
 }
