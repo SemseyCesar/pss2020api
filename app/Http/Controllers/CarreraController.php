@@ -29,6 +29,7 @@ class CarreraController extends Controller
         $carrera->identificador = $request->identificador ;       
         $carrera->dpto = $request->dpto;
         $carrera->docente = $request->docente;
+        $carrera->duracion = $request->duracion;
         $sync_data=[];
         for($i = 0; $i < count($request->materias); $i++){
             $sync_data[$request->materias[$i]['id']] = [
