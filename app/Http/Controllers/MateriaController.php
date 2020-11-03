@@ -116,4 +116,12 @@ class MateriaController extends Controller
         $alumno_materia->pivot->save();
         return response(['materias' => materia::with('anotados')->find($request->materia_id)],200);
     }
+
+    public function materiasprofesor(Request $request){
+        if(auth()->user()->type == 'docente' || auth()->user()->type == 'admin'){
+            $materias = auth()->user()->materias_profesor()->with('anotados');
+            return response(['materias' => $materias->get()],200);
+        }
+        return response(['auth' => "no es profesor"],403);
+    }
 }

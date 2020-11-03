@@ -53,4 +53,4 @@ Route::get('/alumno/carrera','CarreraController@carrerasalumno')->middleware('au
 
 #PROFESORES
 Route::post('/profesor/materia/nota','MateriaController@nota')->middleware('auth:api');
-Route::get('/profesor/carrera','CarreraController@carrerasprofesor')->middleware('auth:api');
+Route::get('/profesor/materia','MateriaController@materiasprofesor')->middleware('auth:api');
