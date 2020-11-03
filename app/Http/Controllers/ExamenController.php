@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Examen;
+use App\Models\User;
 
 class ExamenController extends Controller
 {
@@ -40,5 +41,14 @@ class ExamenController extends Controller
             'hora' => ['required', 'date_format:"H:i"'],
             'aula' => ['required','string']
         ]);
+    }
+
+    public function examenesprofesor(Request $request){
+        $examenes = Examen::all();
+        if(auth()->user()->type == 'docente')
+            $examenes = User::find(auth()->user()->id)->profesor_examenes()->get();
+        if(auth()->user()->type == 'alumno')
+            return response(['message'=>'Acceso Denegado'],403);
+        return response(['examenes' => $examenes],200);
     }
 }

@@ -80,4 +80,8 @@ class User extends Authenticatable
         return $this->belongsToMany('App\Models\Materia', 'alumno_materia', 'alumno_id','materia_id')
             ->withPivot('nota_cursado', 'nota_final');;
     }
+
+    public function profesor_examenes(){
+        return $this->hasMany('App\Models\Examen', 'profesor_id', 'id');
+    }
 }
