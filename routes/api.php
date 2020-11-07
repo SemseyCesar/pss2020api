@@ -19,13 +19,18 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 #AUTH
-Route::post('/register','AuthController@register')->middleware('auth:api');
 Route::post('/login','AuthController@login');
 Route::post('/check','UserController@check')->middleware('auth:api');
 
 #USER
 Route::post('/user/search','UserController@search')->middleware('auth:api');
 Route::get('/user/docentes','UserController@docentes')->middleware('auth:api');
+Route::get('/user/{id}','UserController@detail')->middleware('auth:api');
+Route::put('/user/{id}','UserController@update')->middleware('auth:api');
+Route::delete('/user/{id}','UserController@delete')->middleware('auth:api');
+Route::post('/user','UserController@create')->middleware('auth:api');
+
+
 
 #CARRERAS
 Route::post('/carrera','CarreraController@store')->middleware('auth:api');
