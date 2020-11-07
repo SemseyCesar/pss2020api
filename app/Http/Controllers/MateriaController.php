@@ -85,21 +85,20 @@ class MateriaController extends Controller
     }
 
     public function index(Request $request){
-        $materias = Materia::orderBy('nombre','ASC');
-        $materias->with('profesor')->with('asistente');
-        return response(['materias' => $materias->get()],200);
-    }
-
-
-    public function materiasalumno(Request $request){
-        if(auth()->user()->type == 'alumno'){
-            $carreras_id = User::find(auth()->user()->id)->carreras()->pluck('carrera_id');
-            $materias =  Materia::orderBy('nombre','ASC')->whereHas('carreras', function($query) use($carreras_id) {
-                $query->whereIn('carrera_id', $carreras_id);
-            });
-            return response(['materias' => $materias->get()],200);
+        $materias = null;
+        switch(auth()->user()->type){
+            case 'admin':
+                $materias = Materia::orderBy('nombre','ASC');
+                $materias->with('profesor')->with('asistente');
+                break;
+            case 'docente':
+                $materias = auth()->user()->materias_profesor()->with('anotados')>get();
+                break;
+            case 'alumno':
+                $materias = auth()->user()->materias()->with('profesor')->get();
+            break;
         }
-        return response(['auth' => "no es alumno"],403);
+        return response(['materias' => $materias],200);
     }
 
     public function inscripcion(Request $request){
@@ -107,6 +106,13 @@ class MateriaController extends Controller
         $materia->anotados()->attach(auth()->user()->id);
         $materia->save();
         return response(['materias' => 'anotado'],200);
+    }
+
+    public function desinscripcion(Request $request, $id){
+        $materia = Materia::find($id);
+        $materia->anotados()->detach(auth()->user()->id);
+        $materia->save();
+        return response(['materias' => 'inscripción eliminada'],200);
     }
 
     public function nota(Request $request){

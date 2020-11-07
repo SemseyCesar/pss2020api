@@ -44,11 +44,23 @@ class ExamenController extends Controller
     }
 
     public function examenesprofesor(Request $request){
-        $examenes = Examen::all();
-        if(auth()->user()->type == 'docente')
-            $examenes = User::find(auth()->user()->id)->profesor_examenes()->get();
-        if(auth()->user()->type == 'alumno')
-            return response(['message'=>'Acceso Denegado'],403);
+        return response(['message'=>'Acceso Denegado'],403);
+    }
+
+    public function index(Request $request){
+        $materias = null;
+        switch(auth()->user()->type){
+            case 'admin':
+                $examenes = Examen::all();
+                break;
+            case 'docente':
+                $examenes = User::find(auth()->user()->id)->profesor_examenes()->get();
+                break;
+            case 'alumno':
+                $examenes = User::find(auth()->user()->id)->alumno_examenes()
+                    ->with('profesor')->get();
+            break;
+        }
         return response(['examenes' => $examenes],200);
     }
 }
