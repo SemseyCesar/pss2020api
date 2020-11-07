@@ -8,6 +8,7 @@ use App\Models\User;
 class UserController extends Controller
 {   
     public function create(Request $request){
+
         $validatedRequest = $request->validate([
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
@@ -15,6 +16,7 @@ class UserController extends Controller
             'nombre_apellido' => ['required', 'string', 'max:255',],
             'fecha_nacimiento' => ['required',],
             'lugar_nacimiento' => ['required', 'max:255'],
+            'tipo_documento' => ['required', 'in:LE,LC,DNI,pasaporte'],
             'DNI' => ['required', 'max:255'],
             'direccion' => ['required', 'max:255'],
             'telefono' => ['required', 'max:255'],
@@ -57,13 +59,14 @@ class UserController extends Controller
             return response(['message'=>'Acceso Denegado'],403);
     }
 
-    public function delete(Resquest $request){
+    public function delete(Request $request, $id){
         $user = User::find($id);
         if($user != null)
-            if($user->username != 'admin')
+            if(strcmp($user->username,'admin') != 0){
+                $user->delete();
                 return response(['user' => $user],200);
-            else
-            return response(['user' => "no se puede eliminar"], 403);
+            }else
+                return response(['user' => "no se puede eliminar"], 403);
         else 
             return response(['user' => "not found"], 404);
     }
@@ -74,6 +77,7 @@ class UserController extends Controller
             'nombre_apellido' => ['required', 'string', 'max:255',],
             'fecha_nacimiento' => ['required',],
             'lugar_nacimiento' => ['required', 'max:255'],
+            'tipo_documento' => ['required', 'in:LE,LC,DNI,pasaporte'],
             'DNI' => ['required', 'max:255'],
             'direccion' => ['required', 'max:255'],
             'telefono' => ['required', 'max:255'],
@@ -88,6 +92,7 @@ class UserController extends Controller
             $user->fecha_nacimiento = $validatedRequest['fecha_nacimiento'];
             $user->lugar_nacimiento = $validatedRequest['lugar_nacimiento'];
             $user->DNI = $validatedRequest['DNI'];
+            $user->tipo_documento = $validatedRequest['tipo_documento'];
             $user->direccion = $validatedRequest['direccion'];
             $user->telefono = $validatedRequest['telefono'];
             $user->legajo = $validatedRequest['legajo'];

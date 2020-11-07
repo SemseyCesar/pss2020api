@@ -24,6 +24,7 @@ class User extends Authenticatable
         'type',
         'nombre_apellido',
         'fecha_nacimiento',
+        'tipo_documento',
         'lugar_nacimiento',
         'DNI',
         'direccion',

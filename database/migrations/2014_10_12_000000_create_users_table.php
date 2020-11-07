@@ -24,6 +24,7 @@ class CreateUsersTable extends Migration
             $table->timestamps();
 
             #custom
+            $table->enum('tipo_documento',['DNI', 'pasaporte', 'LE', 'LC']);
             $table->string('nombre_apellido');
             $table->date('fecha_nacimiento');
             $table->string('lugar_nacimiento');
