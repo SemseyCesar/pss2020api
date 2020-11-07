@@ -86,10 +86,11 @@ class MateriaController extends Controller
 
     public function index(Request $request){
         $materias = null;
+
         switch(auth()->user()->type){
             case 'admin':
-                $materias = Materia::orderBy('nombre','ASC');
-                $materias->with('profesor')->with('asistente');
+                $materias = Materia::orderBy('nombre','ASC')
+                    ->with('profesor')->with('asistente')->get();
                 break;
             case 'docente':
                 $materias = auth()->user()->materias_profesor()->with('anotados')>get();
