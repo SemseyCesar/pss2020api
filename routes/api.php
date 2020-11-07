@@ -59,6 +59,9 @@ Route::delete('/materia/inscripcion/{id}','MateriaController@desinscripcion')->m
 #EXAMEN
 Route::post('/examen','ExamenController@store')->middleware('auth:api');
 Route::put('/examen/{id}','ExamenController@update')->middleware('auth:api');
+Route::get('/examen','ExamenController@index')->middleware('auth:api');
+Route::get('/examen/{id}','ExamenController@detail')->middleware('auth:api');
+Route::delete('/examen/{id}','ExamenController@delete')->middleware('auth:api');
 
 #ALUMNO
 Route::get('/alumno/carrera','CarreraController@carrerasalumno')->middleware('auth:api');

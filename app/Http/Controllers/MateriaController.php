@@ -93,7 +93,7 @@ class MateriaController extends Controller
                     ->with('profesor')->with('asistente')->get();
                 break;
             case 'docente':
-                $materias = auth()->user()->materias_profesor()->with('anotados')>get();
+                $materias = auth()->user()->materias_profesor()->with('anotados')->get();
                 break;
             case 'alumno':
                 $materias = auth()->user()->materias()->with('profesor')->get();

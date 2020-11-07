@@ -54,7 +54,8 @@ class ExamenController extends Controller
                 $examenes = Examen::all();
                 break;
             case 'docente':
-                $examenes = User::find(auth()->user()->id)->profesor_examenes()->get();
+                $examenes = User::find(auth()->user()->id)->profesor_examenes()
+                    ->with('materia')->get();
                 break;
             case 'alumno':
                 $examenes = User::find(auth()->user()->id)->alumno_examenes()
@@ -62,5 +63,23 @@ class ExamenController extends Controller
             break;
         }
         return response(['examenes' => $examenes],200);
+    }
+
+    public function delete(Request $request, $id){
+        $examen = Examen::find($id);
+        if($examen != null){
+            $examen->delete();
+            return response(['examen' => 'examen id: '.$id.' fue eliminado'],200);
+        }else 
+            return response(['examen' => "not found"], 404);
+        
+    }
+
+    public function detail(Request $request, $id){
+        $examen = Examen::with('materia')->find($id);
+        if($examen != null)
+            return response(['examen' => $examen ],200);
+        else 
+            return response(['examen' => "not found"], 404);
     }
 }
