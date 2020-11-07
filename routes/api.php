@@ -41,6 +41,7 @@ Route::get('/carrera','CarreraController@index')->middleware('auth:api');
 
 Route::post('/carrera/search','CarreraController@search')->middleware('auth:api');
 Route::post('/carrera/inscripcion','CarreraController@inscripcion')->middleware('auth:api');
+Route::delete('/carrera/inscripcion','CarreraController@desinscripcion')->middleware('auth:api');
 
 #MATERIAS
 
