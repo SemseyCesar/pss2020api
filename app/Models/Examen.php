@@ -23,6 +23,16 @@ class Examen extends Model
             ->withPivot('fecha_inscripcion');
     }
 
+    public function scopeSearch($query, $field, $search)
+    {
+        return $query->where($field,'ilike', '%'.$search.'%');
+    }
+
+    public function scopeSearchSame($query, $field, $search)
+    {
+        return $query->where($field,'=', $search);
+    }
+
     public function materia()
     {
         return $this->belongsTo('App\Models\Materia', 'materia_id');

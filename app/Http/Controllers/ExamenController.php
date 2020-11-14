@@ -48,21 +48,27 @@ class ExamenController extends Controller
     }
 
     public function index(Request $request){
-        $materias = null;
+        $examenes = null;
         switch(auth()->user()->type){
             case 'admin':
-                $examenes = Examen::all();
+                $examenes = Examen::with('materia');
                 break;
             case 'docente':
                 $examenes = User::find(auth()->user()->id)->profesor_examenes()
-                    ->with('materia')->get();
+                    ->with('materia');
                 break;
             case 'alumno':
                 $examenes = User::find(auth()->user()->id)->alumno_examenes()
-                    ->with('profesor')->get();
-            break;
+                    ->with('profesor');
+                break;
         }
-        return response(['examenes' => $examenes],200);
+
+        if($request->has('materia'))
+            $examenes = $examenes->searchSame('materia_id', $request->materia);
+        if($request->has('code'))
+            $examenes = $examenes->search('identificador', $request->code);
+
+        return response(['examenes' => $examenes->get()],200);
     }
 
     public function delete(Request $request, $id){
