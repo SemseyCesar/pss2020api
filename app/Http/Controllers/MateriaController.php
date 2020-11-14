@@ -90,16 +90,22 @@ class MateriaController extends Controller
         switch(auth()->user()->type){
             case 'admin':
                 $materias = Materia::orderBy('nombre','ASC')
-                    ->with('profesor')->with('asistente')->get();
+                    ->with('profesor')->with('asistente');
                 break;
             case 'docente':
-                $materias = auth()->user()->materias_profesor()->with('anotados')->get();
+                $materias = auth()->user()->materias_profesor()->with('anotados');
                 break;
             case 'alumno':
-                $materias = auth()->user()->materias()->with('profesor')->get();
+                $materias = auth()->user()->materias()->with('profesor');
             break;
         }
-        return response(['materias' => $materias],200);
+
+        if($request->has('nombre'))
+            $materias = $materias->search('nombre', $request->nombre);
+        if($request->has('identificador'))
+            $materias = $materias->search('identificador', $request->identificador);
+
+        return response(['materias' => $materias->get()],200);
     }
 
     public function inscripcion(Request $request){
