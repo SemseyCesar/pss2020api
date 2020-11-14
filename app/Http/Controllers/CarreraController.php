@@ -59,14 +59,6 @@ class CarreraController extends Controller
             return response(['carrera' => "not found"], 404);
     }
 
-    public function search(Request $request){
-        $carreras = Carrera::with('materias')->orderBy('nombre','ASC');
-        $search = $request->search;
-        if($search != null)
-            $carreras->search($search);
-        return response(['carreras' => $carreras->get() ],200);
-    }
-
     public function carrera_validate($request, $carrera){
 
         $identificador_validate = 'unique:carreras';

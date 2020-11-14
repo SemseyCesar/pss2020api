@@ -45,14 +45,6 @@ class MateriaController extends Controller
             return response(['materia' => "not found"], 404);
     }
 
-    public function search(Request $request){
-        $materias = Materia::orderBy('nombre','ASC');
-        $search = $request->search;
-        if($search != null)
-            $materias->search($search);
-        return response(['materias' => $materias->get() ],200);
-    }
-
     public function materia_validate($request, $materia){
 
         $identificador_validate = 'unique:materias';
