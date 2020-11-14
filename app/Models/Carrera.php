@@ -23,10 +23,9 @@ class Carrera extends Model
             ->withPivot('anio', 'cuatrimestre');
     }
 
-    public function scopeSearch($query, $search)
+    public function scopeSearch($query, $field, $search)
     {
-        return $query->where('nombre','ilike', '%'.$search.'%')
-            ->orWhere('identificador','ilike', '%'.$search.'%');
+        return $query->where($field,'ilike', '%'.$search.'%');
     }
 
     public function anotados()

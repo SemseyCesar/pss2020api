@@ -98,7 +98,15 @@ class CarreraController extends Controller
     }
 
     public function index(Request $request){
+
         $carreras = Carrera::with('materias');
+
+        if($request->has('nombre'))
+            $carreras = $carreras->search('nombre', $request->nombre);
+        if($request->has('identificador'))
+            $carreras = $carreras->search('identificador', $request->identificador);
+
+        
         return response(['carreras' => $carreras->get() ],200);
     }
 }
