@@ -58,8 +58,7 @@ class ExamenController extends Controller
                     ->with('materia');
                 break;
             case 'alumno':
-                $examenes = User::find(auth()->user()->id)->alumno_examenes()
-                    ->with('profesor');
+                $examenes = Examen::with('materia')->with('profesor');
                 break;
         }
 
@@ -68,7 +67,9 @@ class ExamenController extends Controller
         if($request->has('code'))
             $examenes = $examenes->search('identificador', $request->code);
 
-        return response(['examenes' => $examenes->get()],200);
+        return response(['examenes' => $examenes->get()->each(function($model){
+            $model->inscripto = $model->isInscripto(auth()->user()->id) ;
+        })],200);
     }
 
     public function delete(Request $request, $id){

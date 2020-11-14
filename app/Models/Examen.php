@@ -16,10 +16,14 @@ class Examen extends Model
         'hora',
         'aula'
     ];
-    
+
+    public function isInscripto($id){
+        return in_array($id, $this->anotados()->pluck('alumno_id')->all());
+    }
+
     public function anotados()
     {
-        return $this->belongsToMany('App\Models\User', 'alumno_examen')
+        return $this->belongsToMany('App\Models\User', 'alumno_examen', 'examen_id','alumno_id')
             ->withPivot('fecha_inscripcion');
     }
 

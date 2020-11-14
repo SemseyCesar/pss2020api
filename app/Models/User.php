@@ -88,7 +88,7 @@ class User extends Authenticatable
 
     public function alumno_examenes()
     {
-        return $this->belongsToMany('App\Models\Examen', 'alumno_id', 'id')
+        return $this->belongsToMany('App\Models\Examen', 'alumno_examen', 'alumno_id','examen_id')
             ->withPivot('fecha_inscripcion');
     }
 }
