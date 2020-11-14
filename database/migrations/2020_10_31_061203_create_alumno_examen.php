@@ -22,8 +22,6 @@ class CreateAlumnoExamen extends Migration
 
             $table->integer('alumno_id')->unsigned()->nullable();
             $table->foreign('alumno_id')->references('id')->on('users')->onDelete('cascade');
-        
-            $table->dateTime('fecha_inscripcion');
         });
     }
 

@@ -68,7 +68,7 @@ class ExamenController extends Controller
             $examenes = $examenes->search('identificador', $request->code);
 
         return response(['examenes' => $examenes->get()->each(function($model){
-            $model->inscripto = $model->isInscripto(auth()->user()->id) ;
+            $model->inscripto = $model->isInscripto(auth()->user()->id) ? 'Si': 'No' ;
         })],200);
     }
 
@@ -88,5 +88,19 @@ class ExamenController extends Controller
             return response(['examen' => $examen ],200);
         else 
             return response(['examen' => "not found"], 404);
+    }
+
+    public function inscripcion(Request $request){
+        $examen = Examen::find($request->examen_id);
+        $examen->anotados()->attach(auth()->user()->id);
+        $examen->save();
+        return response(['examen' => 'anotado'],200);
+    }
+
+    public function desinscripcion(Request $request, $id){
+        $examen = Examen::find($id);
+        $examen->anotados()->detach(auth()->user()->id);
+        $examen->save();
+        return response(['examen' => 'inscripción eliminada'],200);
     }
 }

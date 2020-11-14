@@ -59,6 +59,9 @@ Route::get('/examen','ExamenController@index')->middleware('auth:api');
 Route::get('/examen/{id}','ExamenController@detail')->middleware('auth:api');
 Route::delete('/examen/{id}','ExamenController@delete')->middleware('auth:api');
 
+Route::post('/examen/inscripcion','ExamenController@inscripcion')->middleware('auth:api');
+Route::delete('/examen/inscripcion/{id}','ExamenController@desinscripcion')->middleware('auth:api');
+
 #ALUMNO
 Route::get('/alumno/carrera','CarreraController@carrerasalumno')->middleware('auth:api');
 
