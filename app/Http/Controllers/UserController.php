@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {   
@@ -103,5 +104,27 @@ class UserController extends Controller
         }else{
             return response(['user' => "not found"], 404);
         }
+    }
+
+    public function perfil(Request $request){
+        if(auth()->user()->type == 'alumno')
+            return response(['user' => User::find(auth()->user()->id)],200);
+        else 
+            return response(['user' => "not found"], 404);
+    }
+
+    public function editperfil(Request $request){
+        if(auth()->user()->type == 'alumno'){
+            $alumno = User::find(auth()->user()->id);
+            $alumno->direccion = $request->direccion;
+            if($request->password != null && $request->password != "")
+                $alumno->password = Hash::make($request->password);
+            $alumno->direccion = $request->direccion;
+            $alumno->telefono = $request->telefono;
+            $alumno->save();
+
+            return response(['user' => User::find(auth()->user()->id)],200);
+        }else 
+            return response(['user' => "not found"], 404);
     }
 }

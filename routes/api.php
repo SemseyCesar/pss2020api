@@ -30,6 +30,9 @@ Route::put('/user/{id}','UserController@update')->middleware('auth:api');
 Route::delete('/user/{id}','UserController@delete')->middleware('auth:api');
 Route::post('/user','UserController@create')->middleware('auth:api');
 
+Route::get('/alumno/perfil','UserController@perfil')->middleware('auth:api');
+Route::post('/alumno/perfil','UserController@editperfil')->middleware('auth:api');
+
 #CARRERAS
 Route::post('/carrera','CarreraController@store')->middleware('auth:api');
 Route::get('/carrera/{id}','CarreraController@detail')->middleware('auth:api');
