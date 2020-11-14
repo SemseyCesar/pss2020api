@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Materia;
 use App\Models\User;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\NotificacionNota;
 
 class MateriaController extends Controller
 {
@@ -119,6 +121,10 @@ class MateriaController extends Controller
         $alumno_materia->pivot->nota_final = $request->nota_final;
         $alumno_materia->pivot->nota_cursado = $request->nota_cursado;
         $alumno_materia->pivot->save();
+
+        Mail::to($alumno_materia->email)->send(
+            new NotificacionNota($alumno_materia, Materia::find($request->materia_id), User::find($request->alumno_id)));
+
         return response(['materias' => materia::with('anotados')->find($request->materia_id)],200);
     }
 

@@ -24,7 +24,7 @@ class Examen extends Model
     public function anotados()
     {
         return $this->belongsToMany('App\Models\User', 'alumno_examen', 'examen_id','alumno_id')
-            ->withPivot('fecha_inscripcion');
+            ->withPivot('fecha_inscripcion')->withTimestamps();
     }
 
     public function scopeSearch($query, $field, $search)
