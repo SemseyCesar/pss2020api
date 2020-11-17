@@ -116,6 +116,7 @@ class UserController extends Controller
     public function editperfil(Request $request){
         if(auth()->user()->type == 'alumno'){
             $alumno = User::find(auth()->user()->id);
+            $alumno->email = $request->email;
             $alumno->direccion = $request->direccion;
             if($request->password != null && $request->password != "")
                 $alumno->password = Hash::make($request->password);
