@@ -89,6 +89,7 @@ class UserController extends Controller
         $user = User::find($id);
         if($user != null){
             $user->type = $validatedRequest['type'];
+            $alumno->email = $request->email;
             $user->nombre_apellido = $validatedRequest['nombre_apellido'];
             $user->fecha_nacimiento = $validatedRequest['fecha_nacimiento'];
             $user->lugar_nacimiento = $validatedRequest['lugar_nacimiento'];
